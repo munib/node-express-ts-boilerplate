@@ -1,6 +1,4 @@
-import {
-  NextFunction, Request, RequestHandler, Response,
-} from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { getReasonPhrase } from 'http-status-codes';
 
 /**
@@ -24,11 +22,7 @@ export type JsonApiController<T> = (
 export const wrapJsonApiController = <T>(
   jsonApiController: JsonApiController<T>,
 ): RequestHandler => {
-  return (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): void => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const jsonApiControllerAsync = async () => jsonApiController(req, res);
     jsonApiControllerAsync()
       .then((response: unknown) => {
@@ -42,16 +36,16 @@ export const wrapJsonApiController = <T>(
         if (typeof response !== 'object' || !response) {
           throw new Error('Controller response must be a JsonApiResponseEntity object.');
         }
-        const {
-          statusCode, headers, body, msg,
-        } = response as JsonApiResponseEntity<T>;
+        const { statusCode, headers, body, msg } = response as JsonApiResponseEntity<T>;
         if (!('body' in response)) {
           throw new Error('Missing "body" in controller response.');
         }
 
         if (!statusCode) {
-          throw new Error('Missing "statusCode" in controller response.'
-            + ' This is required to ensure developers think well about the statusCode they return.');
+          throw new Error(
+            'Missing "statusCode" in controller response.' +
+              ' This is required to ensure developers think well about the statusCode they return.',
+          );
         }
 
         if (headers && !Array.isArray(headers)) {

@@ -6,13 +6,11 @@ import { ExampleService } from './services';
 import { ExampleController } from './controllers';
 import { ExampleRouter } from './routes';
 import logger from './utils/logger';
+import { log } from 'console';
 
 const exampleDao = new ExampleDao();
-
 const exampleService = new ExampleService({ exampleDao });
-
 const exampleController = new ExampleController({ exampleService });
-
 const exampleRouter = new ExampleRouter({ Router, exampleController });
 
 const app = new App(appConfig);
