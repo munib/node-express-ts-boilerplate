@@ -66,12 +66,12 @@ src/
 docker build -t my-service .
 
 # Run container
-docker run -p 3000:3000 my-service
+docker run -p 3000:3000 -e PACKAGE_NAME=appName my-service
 ```
 
 ## API Documentation
 
-- `GET /example/v1/health-check` - Health check endpoint
+- `GET /api/v1/health-check` - Health check endpoint
 - Additional endpoints documentation coming soon...
 
 ## Contributing
